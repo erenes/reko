@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- dotnet restore goes into this project; doesn't seem to be a way to stop it. -->
-    <TargetFrameworks Condition="'$(MSBuildRuntimeType)'!='Core'">net472</TargetFrameworks>
-    <TargetFrameworks Condition="'$(MSBuildRuntimeType)'=='Core'">netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net472</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <RootNamespace>Reko.Arch.M68k.Design</RootNamespace>
-    <AssemblyName>Reko.Arch.M68k.Design</AssemblyName></PropertyGroup>
+    <AssemblyName>Reko.Arch.M68k.Design</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.csproj"/>
     <ProjectReference Include="..\..\Gui\Gui.csproj"/>

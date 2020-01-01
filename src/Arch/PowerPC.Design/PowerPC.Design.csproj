@@ -7,7 +7,9 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  <RootNamespace>Reko.Arch.PowerPC.Design</RootNamespace><AssemblyName>Reko.Arch.PowerPC.Design</AssemblyName></PropertyGroup>
+    <RootNamespace>Reko.Arch.PowerPC.Design</RootNamespace>
+    <AssemblyName>Reko.Arch.PowerPC.Design</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.csproj"/>
     <ProjectReference Include="..\..\Gui\Gui.csproj"/>

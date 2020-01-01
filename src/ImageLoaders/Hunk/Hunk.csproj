@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  <RootNamespace>Reko.ImageLoaders.Hunk</RootNamespace><AssemblyName>Reko.ImageLoaders.Hunk</AssemblyName></PropertyGroup>
+    <RootNamespace>Reko.ImageLoaders.Hunk</RootNamespace>
+    <AssemblyName>Reko.ImageLoaders.Hunk</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="HunkShow.cs" />
     <Compile Remove="Segment.cs" />

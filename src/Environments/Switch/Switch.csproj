@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyName>Reko.Environments.Switch</AssemblyName>
     <RootNamespace>Reko.Environments.Switch</RootNamespace>
   </PropertyGroup>

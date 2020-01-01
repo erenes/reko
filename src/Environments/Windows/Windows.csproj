@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
@@ -17,11 +17,10 @@
     <TranslateHeader Include="msvcrt.inc" />
   </ItemGroup>
   <Target Name="CopyMetadata" AfterTargets="CoreBuild">
-    <Message Importance="high" Text="*** TargetFramework: $(TargetFramework); MSBuildRuntimeType: $(MSBuildRuntimeType) ***" />
-    <Msbuild Projects="$(ProjectDir)..\..\tools\c2xml\C2xml.csproj" Properties="Configuration=$(Configuration)" />
+    <Message Importance="high" Text="*** TargetFrameworks: $(TargetFrameworks); MSBuildRuntimeType: $(MSBuildRuntimeType) ***" />
+    <Msbuild Projects="$(ProjectDir)..\..\tools\c2xml\C2xml.csproj" Properties="Configuration=$(Configuration);TargetFramework=netcoreapp2.0" />
     <Copy SourceFiles="$(ProjectDir)$(OutDir)Reko.Environments.Windows.dll" DestinationFolder="$(SolutionDir)tools" />
     <Copy SourceFiles="$(SolutionDir)Arch\X86\$(OutDir)Reko.Arch.X86.dll" DestinationFolder="$(SolutionDir)tools" />
-    <Exec Condition="'$(OS)'=='Unix'" Command="ls -R $(SolutionDir)tools" />
     <Exec Condition=" '$(MSBuildRuntimeType)' == 'Core' " Command="dotnet $(SolutionDir)tools/c2xml.dll -a x86-protected-32 -e win32 %(TranslateHeader.Identity) %(TranslateHeader.Filename).xml" />
     <Exec Condition=" '$(MSBuildRuntimeType)' != 'Core' " Command="&quot;$(SolutionDir)tools\c2xml.exe&quot; -a x86-protected-32 -e win32 %(TranslateHeader.Identity) %(TranslateHeader.Filename).xml" />
   </Target>

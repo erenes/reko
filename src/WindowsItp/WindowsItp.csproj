@@ -7,7 +7,9 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  <RootNamespace>Reko.WindowsItp</RootNamespace><AssemblyName>Reko.WindowsItp</AssemblyName></PropertyGroup>
+    <RootNamespace>Reko.WindowsItp</RootNamespace>
+    <AssemblyName>Reko.WindowsItp</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Arch\Arm\Arm.csproj"/>
     <ProjectReference Include="..\Arch\PowerPC\PowerPC.csproj"/>
