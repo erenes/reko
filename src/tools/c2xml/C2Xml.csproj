@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+<!-- 
     <TargetFrameworks Condition="'$(MSBuildRuntimeType)'!='Core'">net472;netcoreapp2.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(MSBuildRuntimeType)'=='Core'">netcoreapp2.0</TargetFrameworks>
-    <RuntimeIdentifiers>win7-x86;win7-x64;unix</RuntimeIdentifiers>
+-->
+    <TargetFrameworks>net472;netcoreapp2.0</TargetFrameworks>
+<!--    <RuntimeIdentifiers>win7-x86;win7-x64;unix</RuntimeIdentifiers> -->
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -19,8 +22,11 @@
   <ItemGroup>
     <ConfigurationFiles Include="$(ProjectDir)..\..\Drivers\reko.config" />
     <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Include="Microsoft.NET.Test.SDK" Version="15.9.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.SDK" Version="16.5.0-preview-20200116-01" />
   </ItemGroup>
 
   <!-- Copy dependencies to the `tools` directory.-->
