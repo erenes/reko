@@ -1,6 +1,6 @@
 #region License
 /* 
- * Copyright (C) 1999-2019 John Källén.
+ * Copyright (C) 1999-2020 John Källén.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  */
 #endregion
 
+using Reko.Core.Operators;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -72,5 +73,10 @@ namespace Reko.Core.Expressions
 		{
 			return new Slice(DataType, Expression, Offset);
 		}
-	}
+
+        public override Expression Invert()
+        {
+            return new UnaryExpression(Operator.Not, PrimitiveType.Bool, this);
+        }
+    }
 }

@@ -27,6 +27,7 @@
     <ProjectReference Include="..\Arch\Cil\Cil.csproj" />
     <ProjectReference Include="..\Arch\Cray\Cray.csproj" />
     <ProjectReference Include="..\Arch\i8051\i8051.csproj" />
+    <ProjectReference Include="..\Arch\LatticeMico\LatticeMico.csproj" />
     <ProjectReference Include="..\Arch\M6800\M6800.csproj" />
     <ProjectReference Include="..\Arch\M68k\M68k.csproj" />
     <ProjectReference Include="..\Arch\MicroBlaze\MicroBlaze.csproj" />
@@ -45,6 +46,7 @@
     <ProjectReference Include="..\Arch\Tlcs\Tlcs.csproj" />
     <ProjectReference Include="..\Arch\Tms7000\Tms7000.csproj" />
     <ProjectReference Include="..\Arch\Vax\Vax.csproj" />
+    <ProjectReference Include="..\Arch\WE32100\WE32100.csproj" />
     <ProjectReference Include="..\Arch\X86\X86.csproj" />
     <ProjectReference Include="..\Arch\Xtensa\Xtensa.csproj" />
     <ProjectReference Include="..\Arch\Z80\Z80.csproj" />
@@ -67,6 +69,7 @@
     <ProjectReference Include="..\Environments\RiscOS\RiscOS.csproj" />
     <ProjectReference Include="..\Environments\RT11\RT11.csproj" />
     <ProjectReference Include="..\Environments\SegaGenesis\SegaGenesis.csproj" />
+    <ProjectReference Include="..\Environments\Switch\Switch.csproj" />
     <ProjectReference Include="..\Environments\SysV\SysV.csproj" />
     <ProjectReference Include="..\Environments\Trs80\Trs80.csproj" />
     <ProjectReference Include="..\Environments\Wii\Wii.csproj" />
@@ -84,6 +87,7 @@
     <ProjectReference Include="..\ImageLoaders\Llvm\LLVM.csproj" />
     <ProjectReference Include="..\ImageLoaders\MachO\MachO.csproj" />
     <ProjectReference Include="..\ImageLoaders\MzExe\MzExe.csproj" />
+    <ProjectReference Include="..\ImageLoaders\Nro\Nro.csproj" />
     <ProjectReference Include="..\ImageLoaders\OdbgScript\OdbgScript.csproj" />
     <ProjectReference Include="..\ImageLoaders\Omf\Omf.csproj" />
     <ProjectReference Include="..\ImageLoaders\TypeLib\TypeLib.csproj" />

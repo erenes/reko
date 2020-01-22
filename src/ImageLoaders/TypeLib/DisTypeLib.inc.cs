@@ -1,8 +1,7 @@
 //**************************************
 //	"DisTypeLib.inc"
 
-namespace Reko.ImageLoaders.TypeLib
-{
+#if VISUALBASIC
 
 //This file is GPL 2008, by TheirCorp
 //**************************************
@@ -375,3 +374,4 @@ Declare Function SetFocus Lib "USER32.DLL" Alias "SetFocus" (ByVal hWnd As Dword
 
 //**************************************
 
+#endif

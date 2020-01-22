@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <ProjectGuid>{2882376F-663A-4FC8-842C-B0300A6829E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <RootNamespace>Reko.ImageLoaders.OdbgScript</RootNamespace>
     <AssemblyName>Reko.ImageLoaders.OdbgScript</AssemblyName>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Arch\X86\X86.csproj" />
@@ -15,5 +15,4 @@
     <ProjectReference Include="..\..\Gui\Gui.csproj" />
     <ProjectReference Include="..\MzExe\MzExe.csproj" />
   </ItemGroup>
-
 </Project>

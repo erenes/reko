@@ -1,6 +1,6 @@
-﻿#region License
+#region License
 /* 
- * Copyright (C) 1999-2019 John Källén.
+ * Copyright (C) 1999-2020 John Källén.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,13 @@ using System.Text;
 
 namespace Reko.Environments.Windows
 {
+    /// <summary>
+    /// Guesses a procedure signature based on the name of a procedure.
+    /// </summary>
+    /// <remarks>
+    /// Various name mangling schemes can give hints on the number of arguments,
+    /// their types, and even the type of the return value.
+    /// </remarks>
     public class SignatureGuesser
     {
         public static Tuple<string, SerializedType, SerializedType> InferTypeFromName(string fnName)
@@ -135,7 +142,7 @@ namespace Reko.Environments.Windows
             var sproc = new SerializedSignature
             {
                 ParametersValid = false,
-                StackDelta = arch.PointerType.Size,
+                StackDelta = (short)arch.PointerType.Size,
             };
             return new Procedure_v1
             {
@@ -149,7 +156,7 @@ namespace Reko.Environments.Windows
             var sproc = new SerializedSignature
             {
                 ParametersValid = false,
-                StackDelta = argBytes + arch.PointerType.Size,
+                StackDelta = (short)(argBytes + arch.PointerType.Size),
             };
             return new Procedure_v1
             {

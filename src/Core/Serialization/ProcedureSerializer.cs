@@ -1,6 +1,6 @@
 #region License
 /* 
- * Copyright (C) 1999-2019 John Källén.
+ * Copyright (C) 1999-2020 John Källén.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,13 +56,15 @@ namespace Reko.Core.Serialization
 
         public void ApplyConvention(SerializedSignature ssig, FunctionType sig)
         {
-            sig.StackDelta = Architecture.PointerType.Size;  //$BUG: far/near pointers?
             if (ssig.StackDelta != 0)
                 sig.StackDelta = ssig.StackDelta;
             else
-                sig.StackDelta = Architecture.PointerType.Size;   //$BUG: x86 real mode?
+                sig.StackDelta = Architecture.PointerType.Size;
             sig.FpuStackDelta = FpuStackOffset;
-            sig.ReturnAddressOnStack = Architecture.PointerType.Size;   //$BUG: x86 real mode?
+            if (ssig.ReturnAddressOnStack != 0)
+                sig.ReturnAddressOnStack = ssig.ReturnAddressOnStack;
+            else
+                sig.ReturnAddressOnStack = Architecture.PointerType.Size;   //$BUG: x86 real mode?
         }
 
         public Identifier CreateId(string name, DataType type, Storage storage)
@@ -86,7 +88,12 @@ namespace Reko.Core.Serialization
         {
             if (ss == null)
                 return null;
-            var retAddrSize = this.Architecture.ReturnAddressOnStack;
+            // If there is no explict return address size,
+            // use the architecture's default return address size.
+
+            var retAddrSize = ss.ReturnAddressOnStack != 0
+                ? ss.ReturnAddressOnStack
+                : this.Architecture.ReturnAddressOnStack;
             if (!ss.ParametersValid)
             {
                 return new FunctionType
@@ -259,6 +266,7 @@ namespace Reko.Core.Serialization
             }
             ssig.StackDelta = sig.StackDelta;
             ssig.FpuStackDelta = sig.FpuStackDelta;
+            ssig.ReturnAddressOnStack = sig.ReturnAddressOnStack;
             return ssig;
         }
 

@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <ProjectGuid>{54029784-C8A6-43F5-9D00-62EC8DA04FA1}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <RootNamespace>Reko.Arch.Rl78</RootNamespace>
     <AssemblyName>Reko.Arch.Rl78</AssemblyName>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>

@@ -18,7 +18,8 @@
 //This file is GPL 2008, by TheirCorp
 //¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 
-namespace Reko.ImageLoaders.TypeLib
+#if VISUALBASIC
+namespace Decompiler.TypeLib
 {
     public class DisTypeLib
     {
@@ -167,10 +168,10 @@ string ls	;
 			// --------------------------------------
 			// open an output file for the disassembly
 			Try
-				#If %Def(%Study)
+				$If %Def(%Study)
 					CurFile = fs
 					Note "" // reset message counter
-				#EndIf
+				$EndIf
 				ls = Mid$(fs, InStr(-1, fs, "\") + 1)
 				ls = MCase$(Extract$(ls, ".")) & ".txt"
 				Open LocalPath & "\" & ls For Output As fo
@@ -197,9 +198,9 @@ End Function // ProcessFile
 CallBack Function ShowDlgProc()
 Local  fs   As String
 
-#If %Def(%ProfileOn)
+$If %Def(%ProfileOn)
 	Profile "Profile.txt"
-#EndIf
+$EndIf
 
 	Select Case As Long CbMsg
 
@@ -240,9 +241,9 @@ End Function
 Function PBMain() As Long
 Local lRslt As Long
 
-#If %Def(%ProfileOn)
+$If %Def(%ProfileOn)
 	Profile "Profile.txt"
-#EndIf
+$EndIf
 
 	// get and save the local path without a trailing backslash
 	LocalPath = String$(%MAX_PATH, $Nul)
@@ -296,3 +297,4 @@ End Function
 
 //¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 
+#endif

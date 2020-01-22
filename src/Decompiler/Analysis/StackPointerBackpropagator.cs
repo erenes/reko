@@ -1,6 +1,6 @@
 #region License
 /* 
- * Copyright (C) 1999-2019 Pavel Tomin.
+ * Copyright (C) 1999-2020 Pavel Tomin.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,7 +112,8 @@ namespace Reko.Analysis
         private (Identifier, int) MatchStackOffsetPattern(Identifier sp)
         {
             (Identifier, int) noMatch = (null, 0);
-            var def = ssa.Identifiers[sp].DefStatement;
+            var sid = ssa.Identifiers[sp];
+            var def = sid.DefStatement;
             if (!(def.Instruction is Assignment ass))
                 return noMatch;
             if (!(ass.Src is BinaryExpression bin))

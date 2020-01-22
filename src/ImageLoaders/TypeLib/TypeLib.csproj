@@ -1,21 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <ProjectGuid>{A4DEF935-217C-4107-998C-C7845893CFA0}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <RootNamespace>Reko.ImageLoaders.TypeLib</RootNamespace>
     <AssemblyName>Reko.ImageLoaders.TypeLib</AssemblyName>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="DisTypeLib.cs" />
-    <Compile Remove="DisTypeLib.inc.cs" />
-    <Compile Remove="GetTypeLibData.cs" />
-    <Compile Remove="MSFT.cs" />
-    <Compile Remove="TypeLib.cs" />
-    <Compile Remove="Typelib.h.cs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.csproj" />
   </ItemGroup>

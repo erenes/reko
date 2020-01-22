@@ -1,4 +1,4 @@
-﻿using Reko.Arch.X86;
+using Reko.Arch.X86;
 using Reko.Core;
 using System;
 using System.Collections.Generic;
@@ -12,9 +12,9 @@ namespace Reko.ImageLoaders.OdbgScript
 
     public class Debugger
     {
-        private X86Emulator emu;
+        private IProcessorEmulator emu;
 
-        public Debugger(X86Emulator emu)
+        public Debugger(IProcessorEmulator emu)
         {
             this.emu = emu;
         }
@@ -30,7 +30,7 @@ namespace Reko.ImageLoaders.OdbgScript
             return null;
         }
 
-        public static void SetHardwareBreakPoint(rulong addr, object o, eHWBPType type, byte size, Action callback)
+        public static void SetHardwareBreakPoint(Address addr, object o, eHWBPType type, byte size, Action callback)
         {
         }
 
@@ -48,7 +48,7 @@ namespace Reko.ImageLoaders.OdbgScript
             throw new NotImplementedException();
         }
 
-        public void RemoveMemoryBPX(rulong membpaddr, rulong membpsize)
+        public void RemoveMemoryBPX(Address membpaddr, rulong membpsize)
         {
             throw new NotImplementedException();
         }
@@ -58,24 +58,24 @@ namespace Reko.ImageLoaders.OdbgScript
             throw new NotImplementedException();
         }
 
-        public void DisableBPX(rulong addr)
+        public void DisableBPX(Address addr)
         {
             throw new NotImplementedException();
         }
 
-        public void SetBPX(rulong addr, byte type, Action SoftwareCallback)
+        public void SetBPX(Address addr, byte type, Action SoftwareCallback)
         {
             if (type == Ue.UE_BREAKPOINT)
             {
-                emu.SetBreakpoint((uint)addr, SoftwareCallback);
+                emu.SetBreakpoint(addr.ToLinear(), SoftwareCallback);
                 return;
             }
             throw new NotImplementedException();
         }
 
-        public void DeleteBPX(rulong addr)
+        public void DeleteBPX(Address addr)
         {
-            emu.DeleteBreakpoint((uint)addr);
+            emu.DeleteBreakpoint(addr.ToLinear());
         }
 
         public bool SetContextData(eContextData p1, rulong p2)
@@ -83,17 +83,17 @@ namespace Reko.ImageLoaders.OdbgScript
             throw new NotImplementedException();
         }
 
-        public bool SetMemoryBPXEx(rulong addr, rulong size, byte p1, bool p2, Action MemoryCallback)
+        public bool SetMemoryBPXEx(Address addr, rulong size, byte p1, bool p2, Action MemoryCallback)
         {
             throw new NotImplementedException();
         }
 
-        public Var GetJumpDestination(object p, rulong addr)
+        public Var GetJumpDestination(object p, Address addr)
         {
             throw new NotImplementedException();
         }
 
-        public rulong GetDebuggedFileBaseAddress()
+        public Address GetDebuggedFileBaseAddress()
         {
             throw new NotImplementedException();
         }
@@ -126,6 +126,16 @@ namespace Reko.ImageLoaders.OdbgScript
         internal void StopDebug()
         {
             emu.Stop();
+        }
+
+        public ulong GetRegisterValue(RegisterStorage reg)
+        {
+            return emu.ReadRegister(reg);
+        }
+
+        public void SetRegisterValue(RegisterStorage reg, ulong value)
+        {
+            emu.WriteRegister(reg, value);
         }
     }
 }

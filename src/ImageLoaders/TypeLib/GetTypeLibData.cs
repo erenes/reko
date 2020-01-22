@@ -1,14 +1,16 @@
 // **************************************
 //    "GetTypeLibData.bas"
 
+#if VISUALBASIC
 namespace Reko.ImageLoaders.TypeLib
-{ 
+{
 
 //This file is GPL 2008, by TheirCorp
 // *************************************
 
 using System.IO;
 using Reko.Core;
+
 
 public class GetTypeLibDatax
 {
@@ -206,5 +208,5 @@ int GetTypeLibData(string cs, string fs)
 	}
     
 } // GetTypeLibData
-
+#endif
 // ***************************************

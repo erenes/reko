@@ -1,6 +1,6 @@
 #region License
 /* 
- * Copyright (C) 1999-2019 Pavel Tomin.
+ * Copyright (C) 1999-2020 Pavel Tomin.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -530,6 +530,12 @@ namespace Reko.UserInterfaces.WindowsForms
                 var endPos = MixedCodeDataModel.Position(endAddr, 0);
                 numer = mixedCodeDataModel.CountLines(startPos, endPos);
                 denom = dataItemNode.NumLines;
+                if (denom == 0)
+                {
+                    Debug.Print("dataItem.NumLines = 0");
+                    numer = 1;
+                    denom = 1;
+                }
             }
             else
             {

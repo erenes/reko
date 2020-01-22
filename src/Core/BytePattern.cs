@@ -1,6 +1,6 @@
 #region License
 /* 
- * Copyright (C) 1999-2019 John Källén.
+ * Copyright (C) 1999-2020 John Källén.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,8 +34,7 @@ namespace Reko.Core
             for (int i = 0; i < sBytes.Length; ++i)
             {
                 char c = sBytes[i];
-                byte b;
-                if (BytePattern.TryParseHexDigit(c, out b))
+                if (BytePattern.TryParseHexDigit(c, out byte b))
                 {
                     bb = bb | (b << shift);
                     shift -= 4;

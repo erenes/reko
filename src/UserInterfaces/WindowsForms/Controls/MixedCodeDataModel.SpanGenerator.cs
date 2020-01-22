@@ -1,6 +1,6 @@
 #region License
 /* 
- * Copyright (C) 1999-2019 John Källén.
+ * Copyright (C) 1999-2020 John Källén.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ namespace Reko.UserInterfaces.WindowsForms.Controls
             ModelPosition pos)
         {
             SpanGenerator sp;
-            if (item is ImageMapBlock b)
+            if (item is ImageMapBlock b && b.Block.Procedure != null)
             {
                 sp = new AsmSpanifyer(program, b.Block.Procedure.Architecture, instructions[b], pos);
             }

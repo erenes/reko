@@ -9,25 +9,10 @@ namespace Reko.ImageLoaders.OdbgScript
     using rulong = System.UInt64;
     using System.Text;
     using System.Linq;
+    using Reko.Core.Lib;
 
     public static class Helper
     {
-
-        // #pragma once
-
-        //#include "HelperFunctions.h"
-
-        //#include <algorithm>
-        //#include <cstdlib>
-        //#include "globals.h"
-
-        //#include "Debug.h"
-
-        //using std::string;
-        //using std::reverse;
-        //using std::min;
-        //using std::max;
-
         // Number conversion
 
         const string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
@@ -93,7 +78,6 @@ namespace Reko.ImageLoaders.OdbgScript
 
             if (@base < 2 || @base > 32)
                 return "";
-
             do
             {
                 @out.Insert(0, digits[(int)(x % @base)]);
@@ -144,16 +128,16 @@ namespace Reko.ImageLoaders.OdbgScript
 #endif
         }
 
+        /// <summary>
+        /// Masks off the high part of the given value.
+        /// </summary>
         public static rulong resize(rulong dw, int size)
         {
-               throw new NotImplementedException();
-#if LATER
-            if (size > 0 && size < sizeof(dw))
+            if (0 <= size && size < sizeof(ulong))
             {
-                dw &= ((1 << (size * 8)) - 1);
+                dw &= Bits.Mask(0, size * 8);
             }
             return dw;
-#endif
         }
 
         public static rulong round_up(rulong dw, rulong val)
@@ -299,6 +283,13 @@ namespace Reko.ImageLoaders.OdbgScript
             return (len > 2 && s[0] == '"' && s.IndexOf('"', 1) == len - 1);
         }
 
+        public static bool IsInterpolatedString(string s)
+        {
+            return s.Length >= 3 &&
+                s.StartsWith("$\"") &&
+                s.EndsWith("\"");
+        }
+
         public static bool IsMemoryAccess(string s)
         {
             int len = s.Length;
@@ -366,17 +357,20 @@ namespace Reko.ImageLoaders.OdbgScript
             return (s.Length >= 2 && s[0] == cstart && s[s.Length - 1] == cend);
         }
 
+        public static string UnquoteInterpolatedString(string s)
+        {
+            return s.Substring(2, s.Length - 3);
+        }
+
         public static string UnquoteString(string s, char cstart, char cend = '\0')
         {
-            string result;
-
             if (cend == 0)
                 cend = cstart;
 
             if (!IsQuotedString(s, cstart, cend))
                 return s;
 
-            result = s.Substring(1, s.Length - 2);
+            var result = s.Substring(1, s.Length - 2);
             if (cstart == '"')
             {
                 result = result.Replace("\\r\\n", "\r\n");

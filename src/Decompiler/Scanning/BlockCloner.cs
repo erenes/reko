@@ -1,6 +1,6 @@
 #region License
 /* 
- * Copyright (C) 1999-2019 John Källén.
+ * Copyright (C) 1999-2020 John Källén.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,11 +38,12 @@ namespace Reko.Scanning
         ExpressionVisitor<Expression>,
         StorageVisitor<Identifier>
     {
-        private Block blockToClone;
-        private Procedure procCalling;
-        private CallGraph callGraph;
+        private readonly Block blockToClone;
+        private readonly Procedure procCalling;
+        private readonly CallGraph callGraph;
+        private readonly Dictionary<Block, Block> mpBlocks;
+        private readonly Dictionary<TemporaryStorage, Identifier> tmps;
         private DataType dt;
-        private Dictionary<Block, Block> mpBlocks;
 
         public BlockCloner(Block blockToClone, Procedure procCalling, CallGraph callGraph)
         {
@@ -50,6 +51,7 @@ namespace Reko.Scanning
             this.procCalling = procCalling;
             this.callGraph = callGraph;
             this.mpBlocks = new Dictionary<Block, Block>();
+            this.tmps = new Dictionary<TemporaryStorage, Identifier>();
         }
 
         public Statement Statement { get; set; }
@@ -372,7 +374,12 @@ namespace Reko.Scanning
 
         public Identifier VisitTemporaryStorage(TemporaryStorage temp)
         {
-            return procCalling.Frame.CreateTemporary(Identifier.Name, Identifier.DataType); 
+            if (!tmps.TryGetValue(temp, out var id))
+            {
+                id = procCalling.Frame.CreateTemporary(temp.DataType);
+                tmps.Add(temp, id);
+            }
+            return id;
         }
     }
 }
