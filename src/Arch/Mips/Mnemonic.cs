@@ -308,5 +308,18 @@ namespace Reko.Arch.Mips
         lwxc1,
         luxc1,
         suxc1,
+
+        // MIPS16e
+        b,
+        beqz,
+        bnez,
+        cmpi,
+        bteqz,
+        btnez,
+        jalx,
+        neg,
+        zeb,
+        zeh,
+        cmp,
     }
 }

@@ -24,6 +24,7 @@ using NUnit.Framework;
 using Reko.Core.Machine;
 using Reko.Core.Types;
 using Reko.Core.Expressions;
+using System.Collections.Generic;
 
 namespace Reko.UnitTests.Arch.Mips
 {
@@ -65,14 +66,10 @@ namespace Reko.UnitTests.Arch.Mips
 
         public override Address LoadAddress { get { return Address.Ptr32(0x00100000); } }
 
-        protected override ImageWriter CreateImageWriter(byte[] bytes)
-        {
-            return new BeImageWriter(bytes);
-        }
-
         private void Given_Mips_v6_Architecture()
         {
-            arch = new MipsBe32Architecture("mipsv6-be-32");
+            arch = new MipsBe32Architecture("mips-be-32");
+            arch.LoadUserOptions(new Dictionary<string, object> { { "decoder", "v6" } });
         }
 
         private void Given_Mips64_Architecture()
@@ -82,7 +79,8 @@ namespace Reko.UnitTests.Arch.Mips
 
         private void Given_Mips64_v6_Architecture()
         {
-            arch = new MipsBe64Architecture("mipsv6-be-32");
+            arch = new MipsBe64Architecture("mips-be-32");
+            arch.LoadUserOptions(new Dictionary<string, object> { { "decoder", "v6" } });
         }
 
         private void VerifyRegisterOperand(MachineOperand op, RegisterStorage reg, PrimitiveType type)

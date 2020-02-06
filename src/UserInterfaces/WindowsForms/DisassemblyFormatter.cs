@@ -52,10 +52,10 @@ namespace Reko.UserInterfaces.WindowsForms
         public IPlatform Platform { get; private set; }
         public Address Address { get; set; }
 
-        public void WriteOpcode(string opcode)
+        public void WriteMnemonic(string sMnemonic)
         {
             TerminateSpan();
-            line.Add(new DisassemblyTextModel.InstructionTextSpan(instr, opcode + " ", Gui.UiStyles.DisassemblerOpcode));
+            line.Add(new DisassemblyTextModel.InstructionTextSpan(instr, sMnemonic + " ", Gui.UiStyles.DisassemblerOpcode));
         }
 
         public void WriteAddress(string formattedAddress, Address addr)

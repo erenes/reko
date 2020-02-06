@@ -16,13 +16,18 @@
   <PropertyGroup>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UnixRelease|AnyCPU'">
+    <OutputPath>bin\UnixRelease\</OutputPath>
+    <DefineConstants>TRACE;PLATFORM_UNIX</DefineConstants>
+    <Optimize>true</Optimize>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="defaultpicdb.zip" />
     <None Include="genPICdb.licenseheader" />
     <None Include="picdb.zip" />
   </ItemGroup>

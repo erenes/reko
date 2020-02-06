@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <ProjectGuid>{45E095E9-D7C2-40AA-913B-AB77582AFBB4}</ProjectGuid>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -11,4 +12,14 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Core.csproj" />
   </ItemGroup>
+</Project>
+    <Content Include="$(SolutionDir)tools\genPICdb\picdb.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Target Name="BeforeBuild">
+    <Message Importance="normal" Text="Copying PIC Database to $(TargetDir)" />
+    <Copy SourceFiles="@(DecompilerMetadata)" DestinationFolder="$(TargetDir)" />
+  </Target>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

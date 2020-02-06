@@ -57,18 +57,18 @@ namespace Reko.UnitTests.Mocks
 
         public FakeArchitecture() : base("fake")
         {
+            this.CarryFlagMask = (uint)StatusFlags.C;
+            this.Description = "Fake Architecture for testing";
             this.Endianness = EndianServices.Little;
+            this.FramePointerType = PrimitiveType.Ptr32;
             this.InstructionBitSize = 32;
+            this.PointerType = PrimitiveType.Ptr32;
             this.rewriters = new RtlTraceBuilder();
             this.StackRegister = GetRegister(FakeArchitecture.iStackRegister);
-            this.Description = "Fake Architecture for testing";
-            this.FramePointerType = PrimitiveType.Ptr32;
-            this.PointerType = PrimitiveType.Ptr32;
             this.WordWidth = PrimitiveType.Word32;
             this.FpuStackBase = ST;
             this.FpuStackRegister = Top;
 
-            this.CarryFlagMask = (uint)StatusFlags.C; 
         }
 
         static FakeArchitecture()
@@ -347,12 +347,12 @@ namespace Reko.UnitTests.Mocks
             throw new NotImplementedException();
         }
 
-        public override SortedList<string, int> GetOpcodeNames()
+        public override SortedList<string, int> GetMnemonicNames()
         {
             throw new NotImplementedException();
         }
 
-        public override int? GetOpcodeNumber(string name)
+        public override int? GetMnemonicNumber(string name)
         {
             throw new NotImplementedException();
         }
@@ -446,12 +446,12 @@ namespace Reko.UnitTests.Mocks
             throw new NotImplementedException();
         }
 
-        public override SortedList<string, int> GetOpcodeNames()
+        public override SortedList<string, int> GetMnemonicNames()
         {
             throw new NotImplementedException();
         }
 
-        public override int? GetOpcodeNumber(string name)
+        public override int? GetMnemonicNumber(string name)
         {
             throw new NotImplementedException();
         }

@@ -80,7 +80,8 @@ namespace Reko.Arch.i8051
 
         public override Expression CreateStackAccess(IStorageBinder binder, int cbOffset, DataType dataType)
         {
-            throw new NotImplementedException();
+            var sp = binder.EnsureRegister(this.StackRegister);
+            return MemoryAccess.Create(sp, cbOffset, dataType);
         }
 
         public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, uint grf)
@@ -99,12 +100,12 @@ namespace Reko.Arch.i8051
             throw new NotImplementedException();
         }
 
-        public override SortedList<string, int> GetOpcodeNames()
+        public override SortedList<string, int> GetMnemonicNames()
         {
             throw new NotImplementedException();
         }
 
-        public override int? GetOpcodeNumber(string name)
+        public override int? GetMnemonicNumber(string name)
         {
             throw new NotImplementedException();
         }
