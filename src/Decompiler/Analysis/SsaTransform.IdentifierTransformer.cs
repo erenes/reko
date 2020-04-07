@@ -65,7 +65,7 @@ namespace Reko.Analysis
             /// </summary>
             /// <param name="bs"></param>
             /// <returns>The SSA name of the identifier that was read.</returns>
-            public virtual SsaIdentifier ReadVariable(SsaBlockState bs)
+            public virtual SsaIdentifier ReadVariable(SsaBlockState bs, int recurse = 0)
             {
                 if (bs.Terminates)
                 {
@@ -74,11 +74,11 @@ namespace Reko.Analysis
                     // dominate every other block in the procedure.
                     bs = outer.blockstates[bs.Block.Procedure.EntryBlock];
                 }
-                var sid = ReadBlockLocalVariable(bs);
+                var sid = ReadBlockLocalVariable(bs, recurse);
                 if (sid != null)
                     return sid;
                 // Keep probin'.
-                return ReadVariableRecursive(bs);
+                return ReadVariableRecursive(bs, recurse);
             }
 
             /// <summary>
@@ -89,9 +89,9 @@ namespace Reko.Analysis
             /// <returns>An SsaIdentifier if it is available, 
             /// otherwise null.
             /// </returns>
-            public abstract SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs);
+            public abstract SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs, int recurse = 0);
 
-            public SsaIdentifier ReadVariableRecursive(SsaBlockState bs)
+            public SsaIdentifier ReadVariableRecursive(SsaBlockState bs, int recurse = 0)
             {
                 SsaIdentifier val;
                 if (bs.Block.Pred.Any(p => !blockstates[p].Visited))
@@ -107,8 +107,11 @@ namespace Reko.Analysis
                 }
                 else if (bs.Block.Pred.Count == 1)
                 {
-                    // Search for the variable in the single predecessor.
-                    val = ReadVariable(blockstates[bs.Block.Pred[0]]);
+                    if (recurse <= 25)
+                        // Search for the variable in the single predecessor.
+                        val = ReadVariable(blockstates[bs.Block.Pred[0]], recurse + 1);
+                    else
+                        throw new StackOverflowException("Reached maximum recursion!");
                 }
                 else
                 {
@@ -512,7 +515,7 @@ namespace Reko.Analysis
                 return sid.Identifier;
             }
 
-            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs)
+            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs, int recurse = 0)
             {
                 DebugEx.Verbose(trace, "  ReadBlockLocalVariable: ({0}, {1}, ({2})", bs.Block.Name, id, this.liveBits);
                 if (!bs.currentDef.TryGetValue(id.Storage.Domain, out var alias))
@@ -690,7 +693,7 @@ namespace Reko.Analysis
                 return sid.Identifier;
             }
 
-            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs)
+            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs, int recurse = 0)
             {
                 if (!bs.currentFlagDef.TryGetValue(flagGroup.FlagRegister.Domain, out var alias))
                     return null;
@@ -715,7 +718,7 @@ namespace Reko.Analysis
                 if (mask != 0)
                 {
                     var fx = new FlagGroupTransformer(this.id, this.flagGroup, this.stm, this.outer, mask);
-                    var sidR = fx.ReadVariableRecursive(bs);
+                    var sidR = fx.ReadVariableRecursive(bs, recurse);
                     sids.Add((alias, sidR, mask));
                 }
                 if (sids.Count == 1)
@@ -789,7 +792,7 @@ namespace Reko.Analysis
                     stackOffset + id.DataType.Size);
             }
 
-            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs)
+            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs, int recurse = 0)
             {
                 var ints = bs.currentStackDef.GetIntervalsOverlappingWith(offsetInterval)
                     .OrderBy(i => i.Key.Start)
@@ -981,7 +984,7 @@ namespace Reko.Analysis
                 this.seq = seq;
             }
 
-            public override SsaIdentifier ReadVariable(SsaBlockState bs)
+            public override SsaIdentifier ReadVariable(SsaBlockState bs, int recurse = 0)
             {
                 var sids = new SsaIdentifier[seq.Elements.Length];
                 var offset = seq.BitSize;
@@ -991,7 +994,7 @@ namespace Reko.Analysis
                     offset -= e.BitSize;
                     var ss = outer.factory.Create(outer.ssa.Procedure.Frame.EnsureIdentifier(e), stm);
                     ss.Offset = (int) offset;
-                    var sid = ss.ReadVariable(bs);
+                    var sid = ss.ReadVariable(bs, recurse);
                     sids[i++] = sid;
                 }
                 return Fuse(sids);
@@ -1010,7 +1013,7 @@ namespace Reko.Analysis
                 return sid.Identifier;
             }
 
-            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs)
+            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs, int recurse = 0)
             {
                 // We shouldn't reach this, as ReadVariable above should have 
                 // broken the sequence into ReadVariable calls to the components.
@@ -1089,7 +1092,7 @@ namespace Reko.Analysis
                 this.stg = stg;
             }
 
-            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs)
+            public override SsaIdentifier ReadBlockLocalVariable(SsaBlockState bs, int recurse = 0)
             {
                 bs.currentSimpleDef.TryGetValue(stg, out var sid);
                 return sid;
