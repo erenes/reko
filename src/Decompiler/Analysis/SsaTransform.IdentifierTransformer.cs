@@ -38,6 +38,7 @@ namespace Reko.Analysis
         public abstract class IdentifierTransformer
         {
             protected Identifier id;
+            private int depth;
             protected readonly Statement stm;
             protected readonly SsaTransform outer;
             protected readonly SsaIdentifierCollection ssaIds;
@@ -67,6 +68,7 @@ namespace Reko.Analysis
             /// <returns>The SSA name of the identifier that was read.</returns>
             public virtual SsaIdentifier ReadVariable(SsaBlockState bs, int recurse = 0)
             {
+                trace.Verbose("ReadVariable {0} in block {1}", this.id, bs.Block.Name);
                 if (bs.Terminates)
                 {
                     // Reko has determined that this block diverges. We fall back to 
@@ -78,7 +80,16 @@ namespace Reko.Analysis
                 if (sid != null)
                     return sid;
                 // Keep probin'.
-                return ReadVariableRecursive(bs, recurse);
+                // The commented-out code below is for assistance when troubleshooting
+                // stack overflows in the code. These are always caused by the
+                // CFG of the Procedure being malformed due to errors in the Scanning
+                // phase. Once #726 is addressed, there should be no need for this
+                // code.
+                //if (++this.depth > 1000)
+                //    throw new StackOverflowException("");
+                sid = ReadVariableRecursive(bs, recurse);
+                //--this.depth;
+                return sid;
             }
 
             /// <summary>
